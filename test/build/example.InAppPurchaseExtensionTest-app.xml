@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><application xmlns="http://ns.adobe.com/air/application/3.1">
+	<id>yourAppId</id>
+	<filename>InAppPurchaseExtensionTest</filename>
+	<name>Dummy1</name>
+	<versionNumber>0.6.0</versionNumber>
+	<versionLabel>v0.6.0</versionLabel>
+	<initialWindow>
+		<content>InAppPurchaseExtensionTest.swf</content>
+		<visible>true</visible>
+		<aspectRatio>portrait</aspectRatio>
+		<autoOrients>true</autoOrients>
+		<fullScreen>true</fullScreen>
+		<renderMode>cpu</renderMode>
+		<softKeyboardBehavior>none</softKeyboardBehavior>
+    </initialWindow>
+
+	<icon>
+		<image29x29>icons/icon_29.png</image29x29>
+		<image57x57>icons/icon_57.png</image57x57>
+	</icon>
+	
+	<extensions>
+		<extensionID>com.sticksports.nativeExtensions.InAppPurchase</extensionID>
+	</extensions>
+
+	<iPhone>
+		<InfoAdditions>
+			<![CDATA[
+				<key>UIDeviceFamily</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+				</array>
+			]]>
+		</InfoAdditions>
+		<requestedDisplayResolution>high</requestedDisplayResolution>
+	</iPhone>
+</application>

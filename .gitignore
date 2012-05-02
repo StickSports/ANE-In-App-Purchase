@@ -1,0 +1,20 @@
+# General
+temp/*
+test/bin/*
+build.config
+InAppPurchaseExtensionTest-app.xml
+
+# Not licensed for distribution
+FlashRuntimeExtensions.h
+
+# Eclipse FDT
+.settings/*
+.project
+
+# Xcode
+xcuserdata
+
+# OS X
+Icon
+Thumbs.db
+.DS_Store

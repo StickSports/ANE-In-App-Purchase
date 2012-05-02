@@ -1,0 +1,16 @@
+<extension xmlns="http://ns.adobe.com/air/extension/3.1">
+	<id>com.sticksports.nativeExtensions.InAppPurchase</id>
+	<versionNumber>0.1.0</versionNumber>
+	<platforms>
+		<platform name="iPhone-ARM">
+			<applicationDeployment>
+				<nativeLibrary>libInAppPurchaseIosExtension.a</nativeLibrary>
+				<initializer>InAppPurchaseExtensionInitializer</initializer>
+				<finalizer>InAppPurchaseExtensionFinalizer</finalizer>
+			</applicationDeployment>
+		</platform>
+		<platform name="default">
+			<applicationDeployment/>
+		</platform>
+	</platforms>
+</extension>

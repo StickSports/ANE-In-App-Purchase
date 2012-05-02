@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ANE Test Build Scripts" default="build.debug">
+	
+	<property file="build.config"/>
+
+	<target name="build.debug" depends="debug-compile,debug-package"
+		description="Build and package the app in debug mode."/>
+	
+	<target name="debug-compile" description="Build a debug version of the application swf">
+		<mkdir dir="../bin"/>
+		
+		<exec executable="${sdk.home}/bin/amxmlc" failonerror="true" dir="../bin">
+			<arg line='-source-path ../src'/>
+			<arg line='-default-size=320,480'/>
+			<arg line='-default-background-color 0x000000'/>
+			<arg line='-default-frame-rate 30'/>
+			<arg line='-debug=true'/>
+			<arg line='-optimize=true'/>
+			<arg line='-swf-version=13'/>
+			<arg line='-external-library-path+="../../bin/InAppPurchase.swc"'/>
+			<arg line='-output InAppPurchaseExtensionTest.swf'/>
+			<arg line='../src/InAppPurchaseExtensionTest.as'/>
+		</exec>
+		
+	</target>
+	
+	<target name="debug-package" description="Create the debug application .ipa package">
+		<copy file="./InAppPurchaseExtensionTest-app.xml" todir="../bin" overwrite="true"/>
+		<copy file="./Default.png" todir="../bin" overwrite="true"/>
+		<copy todir="../bin/icons">
+		    <fileset dir="./icons"/>
+		</copy>
+
+		<exec executable="${sdk.home}/bin/adt" failonerror="true" dir="../bin">
+			<arg value="-package"/>
+			<arg value="-target"/>
+			<arg value="ipa-debug-interpreter"/>
+			<arg value="-connect"/>
+			<arg value="-provisioning-profile"/>
+			<arg value="${ios.provisioning.profile}"/>
+			<arg value="-storetype"/>
+			<arg value="pkcs12"/>
+			<arg value="-keystore"/>
+			<arg value="${ios.keystore.file}"/>
+			<arg value="-storepass"/>
+			<arg value="${ios.keystore.password}"/>
+			<arg value="InAppPurchaseExtensionTest.ipa"/>
+			<arg value="InAppPurchaseExtensionTest-app.xml"/>
+			<arg value="InAppPurchaseExtensionTest.swf"/>
+			<arg value="Default.png"/>
+			<arg value="icons"/>
+			<arg line="-extdir ../../bin/"/>
+			<arg line="-platformsdk ${ios.sdk}"/>
+		</exec>
+	</target>
+</project>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Air Native Extension Build Scripts" default="all">
+	
+	<property file="build.config"/>
+		
+	<target name="all" depends="ios,swc,default,package" description="Full build of extension"/>
+	
+	<target name="ios" description="Build iOS Library">
+		<mkdir dir="../temp/ios/build/"/>
+
+		<exec executable="xcodebuild" failonerror="true" dir="../ios/${name}IosExtension">
+			<arg line='-project ${name}IosExtension.xcodeproj'/>
+			<arg line='-target ${name}IosExtension'/>
+			<arg line='-configuration Release'/>
+			<arg line='SYMROOT=../../temp/ios/build/'/>
+		</exec>
+		
+		<copy file="../temp/ios/build/Release-iphoneos/lib${name}IosExtension.a" todir="../temp/ios" overwrite="true"/>
+		
+		<delete dir="../temp/ios/build/"/>
+	</target>
+		
+	<target name="swc" description="Build swc library">
+		<mkdir dir="../temp/swc/content/"/>
+		
+		<fileset dir="../actionscript/src" casesensitive="yes" id="classfiles">
+			<include name="**/*.as"/>
+		</fileset>
+
+		<pathconvert property="classlist" refid="classfiles" pathsep=" " dirsep=".">
+			<regexpmapper from=".*src.(.*)\.as" to="\1"/>
+		</pathconvert>
+		
+		<exec executable="${sdk.home}/bin/compc" failonerror="true">
+			<arg line='-source-path ../actionscript/src'/>
+			<arg line='-output ../temp/swc/${name}.swc'/>
+			<arg line='-swf-version=13'/>
+			<arg line='-external-library-path+="${sdk.home}/frameworks/libs/air/airglobal.swc"'/>
+			<arg line='-source-path+="../libs/src"'/>
+			<arg line='-include-classes ${classlist}'/>
+		</exec>
+
+		<unzip src="../temp/swc/${name}.swc" dest="../temp/swc/content" overwrite="true"/>
+		<copy file="../temp/swc/content/library.swf" todir="../temp/ios" overwrite="true"/>
+		<delete dir="../temp/swc/content/"/>
+	</target>
+	
+	<target name="default" description="Build default swc library">
+		<mkdir dir="../temp/default/"/>
+		
+		<fileset dir="../default/src" casesensitive="yes" id="classfiles2">
+			<include name="**/*.as"/>
+		</fileset>
+
+		<pathconvert property="classlist2" refid="classfiles2" pathsep=" " dirsep=".">
+			<regexpmapper from=".*src.(.*)\.as" to="\1"/>
+		</pathconvert>
+		
+		<exec executable="${sdk.home}/bin/compc" failonerror="true">
+			<arg line='-source-path ../default/src'/>
+			<arg line='-output ../temp/default/${name}.swc'/>
+			<arg line='-swf-version=13'/>
+			<arg line='-external-library-path+="${sdk.home}/frameworks/libs/air/airglobal.swc"'/>
+			<arg line='-source-path+="../libs/src"'/>
+			<arg line='-include-classes ${classlist2}'/>
+		</exec>
+
+		<unzip src="../temp/default/${name}.swc" dest="../temp/default/swc" overwrite="true"/>
+		<copy file="../temp/default/swc/library.swf" todir="../temp/default" overwrite="true"/>
+		<delete dir="../temp/default/swc"/>
+	</target>
+	
+	<target name="package" description="Create the extension package">
+		<exec executable="${sdk.home}/bin/adt" failonerror="true" dir="../temp">
+			<arg value="-package"/>
+			<arg value="-storetype"/>
+			<arg value="pkcs12"/>
+			<arg value="-keystore"/>
+			<arg value="${keystore.file}"/>
+			<arg value="-storepass"/>
+			<arg value="${keystore.password}"/>
+			<arg value="-target"/>
+			<arg value="ane"/>
+			<arg value="${name}.ane"/>
+			<arg value="../build/extension.xml"/>
+			<arg line="-swc swc/${name}.swc"/>
+			<arg line="-platform iPhone-ARM -platformoptions ../build/platform.xml -C ios/ ."/>
+			<arg line="-platform default -C default/ ."/>
+		</exec>
+		
+		<move file="../temp/${name}.ane" todir="../bin"/>
+		<move file="../temp/default/${name}.swc" todir="../bin"/>
+		<delete dir="../temp"/>
+	</target>
+</project>
