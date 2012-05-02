@@ -13,7 +13,12 @@
 #define fetchProductsSuccess "fetchProductsSuccess"
 #define restoreTransactionsComplete "restoreTransactionsComplete"
 #define restoreTransactionsFailed "restoreTransactionsFailed"
+#define purchaseProductFailed "purchaseProductFailed"
+#define transactionPurchased "transactionPurchased"
+#define transactionFailed "transactionFailed"
+#define transactionRestored "transactionRestored"
 
 #define ASProduct "com.sticksports.nativeExtensions.inAppPurchase.IAPProduct"
+#define ASTransaction "com.sticksports.nativeExtensions.inAppPurchase.IAPTransaction"
 
 #endif

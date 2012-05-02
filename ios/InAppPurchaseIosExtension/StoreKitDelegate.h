@@ -14,7 +14,7 @@
 {
     
 }
-- (id)initWithContext:(FREContext)extensionContext andDictionary:(NSMutableDictionary*)objects;
+- (id)initWithContext:(FREContext)extensionContext andReturnObjects:(NSMutableDictionary*)objects andProducts:(NSMutableDictionary*)prods;
 // SKProductREquestDelegate
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response;
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error;

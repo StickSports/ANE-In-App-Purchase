@@ -14,9 +14,9 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		public static var restoreTransactionsComplete : Signal0 = new Signal0();
 		public static var restoreTransactionsFailed : Signal1 = new Signal1( String );
 		
-		public static var transactionPurchased : Signal1 = new Signal1( Object );
-		public static var transactionFailed : Signal1 = new Signal1( Object );
-		public static var transactionRestored : Signal1 = new Signal1( Object );
+		public static var transactionPurchased : Signal1 = new Signal1( IAPTransaction );
+		public static var transactionFailed : Signal1 = new Signal1( IAPTransaction );
+		public static var transactionRestored : Signal1 = new Signal1( IAPTransaction );
 		
 		private static var extensionContext : ExtensionContext = null;
 		private static var initialised : Boolean = false;
@@ -27,7 +27,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		/**
 		 * Initialise the extension
 		 */
-		private static function init() : void
+		public static function init() : void
 		{
 			if ( !initialised )
 			{
@@ -65,7 +65,27 @@ package com.sticksports.nativeExtensions.inAppPurchase
 				case InternalMessages.restoreTransactionsFailed :
 					restoreTransactionsFailed.dispatch( event.code );
 					break;
-				
+				case InternalMessages.transactionPurchased :
+					var t1 : IAPTransaction = getReturnedTransaction( event.code );
+					if( t1 )
+					{
+						transactionPurchased.dispatch( t1 );
+					}
+					break;
+				case InternalMessages.transactionFailed :
+					var t2 : IAPTransaction = getReturnedTransaction( event.code );
+					if( t2 )
+					{
+						transactionFailed.dispatch( t2 );
+					}
+					break;
+				case InternalMessages.transactionRestored :
+					var t3 : IAPTransaction = getReturnedTransaction( event.code );
+					if( t3 )
+					{
+						transactionRestored.dispatch( t3 );
+					}
+					break;
 			}
 		}
 		
@@ -102,22 +122,16 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			{
 				extensionContext.call( NativeMethods.purchaseProduct, productId, quantity );
 			}
-			else
-			{
-				transactionFailed.dispatch( null );
-			}
 		}
 		
-		public static function finishTransaction( transactionId : String ) : void
+		public static function finishTransaction( transactionId : String ) : Boolean
 		{
+			var success : Boolean = false;
 			if( transactionId )
 			{
-				extensionContext.call( NativeMethods.finishTransaction, transactionId );
+				success = extensionContext.call( NativeMethods.finishTransaction, transactionId ) as Boolean;
 			}
-			else
-			{
-
-			}
+			return success;
 		}
 		
 		public static function restoreTransactions() : void
@@ -125,10 +139,39 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			extensionContext.call( NativeMethods.restoreTransactions );
 		}
 		
+		public static function getCurrentTransactions() : Array
+		{
+			return extensionContext.call( NativeMethods.getCurrentTransactions ) as Array;
+		}
+		
 		private static function getReturnedProducts( key : String ) : Array
 		{
 			return extensionContext.call( NativeMethods.getStoredProductInformation, key ) as Array;
 		}
 
+		private static function getReturnedTransaction( key : String ) : IAPTransaction
+		{
+			return extensionContext.call( NativeMethods.getStoredTransaction, key ) as IAPTransaction;
+		}
+		
+		/**
+		 * Clean up the extension - only if you no longer need it or want to free memory. All listeners will be removed.
+		 */
+		public static function dispose() : void
+		{
+			if ( extensionContext )
+			{
+				extensionContext.dispose();
+				extensionContext = null;
+			}
+			productInformationReceived.removeAll();
+			productInformationFailed.removeAll();
+			restoreTransactionsComplete.removeAll();
+			restoreTransactionsFailed.removeAll();
+			transactionPurchased.removeAll();
+			transactionFailed.removeAll();
+			transactionRestored.removeAll();
+			initialised = false;
+		}
 	}
 }

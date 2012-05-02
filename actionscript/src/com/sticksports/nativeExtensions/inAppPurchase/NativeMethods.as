@@ -9,5 +9,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		internal static const purchaseProduct : String = "purchaseProduct";
 		internal static const finishTransaction : String = "finishTransaction";
 		internal static const restoreTransactions : String = "restoreTransactions";
+		internal static const getCurrentTransactions : String = "getCurrentTransactions";
+		internal static const getStoredTransaction : String = "getStoredTransaction";
 	}
 }

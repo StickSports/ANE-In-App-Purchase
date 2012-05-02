@@ -82,6 +82,20 @@ FREResult FRENewObjectFromString( NSString* string, FREObject* asString )
     return FRENewObjectFromUTF8( string.length, (uint8_t*) string.UTF8String, asString );
 }
 
+FREResult FRENewObjectFromError( NSError* error, FREObject* asError )
+{
+    FREResult result;
+    result = FRENewObject( "Error", 0, NULL, asError, NULL );
+    if( result != FRE_OK ) return result;
+    
+    result = FRESetObjectPropertyString( *asError, "message", error.localizedDescription );
+    if( result != FRE_OK ) return result;
+    
+    result = FRESetObjectPropertyInt( *asError, "errorID", error.code );
+    if( result != FRE_OK ) return result;
+    return FRE_OK;
+}
+
 FREResult FRENewObjectFromDate( NSDate* date, FREObject* asDate )
 {
     NSTimeInterval timestamp = date.timeIntervalSince1970 * 1000;
@@ -93,6 +107,24 @@ FREResult FRENewObjectFromDate( NSDate* date, FREObject* asDate )
     if( result != FRE_OK ) return result;
     result = FRESetObjectProperty( *asDate, "time", time, NULL);
     if( result != FRE_OK ) return result;
+    return FRE_OK;
+}
+
+FREResult FRENewObjectFromData( NSData* data, FREObject* asData )
+{
+    FREResult result;
+    result = FRENewObject( "ByteArray", 0, NULL, asData, NULL );
+    if( result != FRE_OK ) return result;
+    result = FRESetObjectPropertyInt( *asData, "length", data.length );
+    if( result != FRE_OK ) return result;
+    
+    FREByteArray actualBytes;
+    result = FREAcquireByteArray( asData, &actualBytes );
+    if( result != FRE_OK ) return result;
+    memcpy( actualBytes.bytes, data.bytes, data.length );
+    result = FREReleaseByteArray(&actualBytes);    
+    if( result != FRE_OK ) return result;
+    
     return FRE_OK;
 }
 
@@ -145,6 +177,28 @@ FREResult FRESetObjectPropertyDate( FREObject asObject, const uint8_t* propertyN
     FREResult result;
     FREObject asValue;
     result = FRENewObjectFromDate( value, &asValue );
+    if( result != FRE_OK ) return result;
+    result = FRESetObjectProperty( asObject, propertyName, asValue, NULL );
+    if( result != FRE_OK ) return result;
+    return FRE_OK;
+}
+
+FREResult FRESetObjectPropertyError( FREObject asObject, const uint8_t* propertyName, NSError* value )
+{
+    FREResult result;
+    FREObject asValue;
+    result = FRENewObjectFromError( value, &asValue );
+    if( result != FRE_OK ) return result;
+    result = FRESetObjectProperty( asObject, propertyName, asValue, NULL );
+    if( result != FRE_OK ) return result;
+    return FRE_OK;
+}
+
+FREResult FRESetObjectPropertyData( FREObject asObject, const uint8_t* propertyName, NSData* value )
+{
+    FREResult result;
+    FREObject asValue;
+    result = FRENewObjectFromData( value, &asValue );
     if( result != FRE_OK ) return result;
     result = FRESetObjectProperty( asObject, propertyName, asValue, NULL );
     if( result != FRE_OK ) return result;

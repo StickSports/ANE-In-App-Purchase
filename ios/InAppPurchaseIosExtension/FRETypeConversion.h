@@ -17,11 +17,15 @@ FREResult FREGetObjectAsSetOfStrings( FREObject object, NSMutableSet** value );
 
 FREResult FRENewObjectFromString( NSString* string, FREObject* asString );
 FREResult FRENewObjectFromDate( NSDate* date, FREObject* asDate );
+FREResult FRENewObjectFromError( NSError* error, FREObject* asError );
+FREResult FRENewObjectFromData( NSData* data, FREObject* asData );
 
 FREResult FRESetObjectPropertyString( FREObject asObject, const uint8_t* propertyName, NSString* value );
 FREResult FRESetObjectPropertyBool( FREObject asObject, const uint8_t* propertyName, uint32_t value );
 FREResult FRESetObjectPropertyInt( FREObject asObject, const uint8_t* propertyName, int32_t value );
 FREResult FRESetObjectPropertyNum( FREObject asObject, const uint8_t* propertyName, double value );
 FREResult FRESetObjectPropertyDate( FREObject asObject, const uint8_t* propertyName, NSDate* value );
+FREResult FRESetObjectPropertyError( FREObject asObject, const uint8_t* propertyName, NSError* value );
+FREResult FRESetObjectPropertyData( FREObject asObject, const uint8_t* propertyName, NSData* value );
 
 #endif

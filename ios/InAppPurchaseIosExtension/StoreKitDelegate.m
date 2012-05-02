@@ -13,12 +13,12 @@
 }
 @property FREContext context;
 @property (retain)NSMutableDictionary* returnObjects;
-
+@property (retain)NSMutableDictionary* products;
 @end
 
 @implementation StoreKitDelegate
 
-@synthesize context, returnObjects;
+@synthesize context, returnObjects, products;
 
 - (NSString*)storeReturnObject:(id)object
 {
@@ -31,13 +31,14 @@
     return key;
 }
 
-- (id)initWithContext:(FREContext)extensionContext andDictionary:(NSMutableDictionary*)objects
+- (id)initWithContext:(FREContext)extensionContext andReturnObjects:(NSMutableDictionary*)objects andProducts:(NSMutableDictionary*)prods;
 {
     self = [super init];
     if( self )
     {
         context = extensionContext;
         returnObjects = objects;
+        products = prods;
     }
     return self;
 }
@@ -45,18 +46,41 @@
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
     NSString* code = [self storeReturnObject:response];
+    for( SKProduct* product in response.products )
+    {
+        [products setValue:product forKey:product.productIdentifier];
+    }
     FREDispatchStatusEventAsync( context, code.UTF8String, fetchProductsSuccess );
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
 {
     [request release];
-    FREDispatchStatusEventAsync( context, "", fetchProductsFailed );
+    FREDispatchStatusEventAsync( context, error.localizedDescription.UTF8String, fetchProductsFailed );
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray *)transactions
 {
-    
+    NSString* code;
+    for (SKPaymentTransaction *transaction in transactions)
+    {
+        switch (transaction.transactionState)
+        {
+            case SKPaymentTransactionStatePurchased:
+                code = [self storeReturnObject:transaction];
+                FREDispatchStatusEventAsync( context, code.UTF8String, transactionPurchased );
+                break;
+            case SKPaymentTransactionStateFailed:
+                code = [self storeReturnObject:transaction];
+                FREDispatchStatusEventAsync( context, code.UTF8String, transactionFailed );
+                break;
+            case SKPaymentTransactionStateRestored:
+                code = [self storeReturnObject:transaction];
+                FREDispatchStatusEventAsync( context, code.UTF8String, transactionRestored );
+            default:
+                break;
+        }
+    }
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray *)transactions
