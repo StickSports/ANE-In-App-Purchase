@@ -79,20 +79,33 @@ FREResult FREGetObjectAsSetOfStrings( FREObject object, NSMutableSet** value )
 
 FREResult FRENewObjectFromString( NSString* string, FREObject* asString )
 {
-    return FRENewObjectFromUTF8( string.length, (uint8_t*) string.UTF8String, asString );
+    const char* utf8String = string.UTF8String;
+    unsigned long length = strlen( utf8String );
+    return FRENewObjectFromUTF8( length + 1, (uint8_t*) utf8String, asString );
 }
 
 FREResult FRENewObjectFromError( NSError* error, FREObject* asError )
 {
     FREResult result;
+    
+    FREObject code;
+    result = FRENewObjectFromInt32( error.code, &code );
+    if( result != FRE_OK ) return result;
+    FREObject message;
+    result = FRENewObjectFromString( error.localizedDescription, &message );
+    if( result != FRE_OK ) return result;
+    
+    FREObject params;
+    result = FRENewObject( "Array", 0, NULL, &params, NULL );
+    if( result != FRE_OK ) return result;
+    result = FRESetArrayLength( params, 2 );
+    if( result != FRE_OK ) return result;
+    FRESetArrayElementAt( params, 0, message );
+    FRESetArrayElementAt( params, 1, code );
+    
     result = FRENewObject( "Error", 0, NULL, asError, NULL );
     if( result != FRE_OK ) return result;
     
-    result = FRESetObjectPropertyString( *asError, "message", error.localizedDescription );
-    if( result != FRE_OK ) return result;
-    
-    result = FRESetObjectPropertyInt( *asError, "errorID", error.code );
-    if( result != FRE_OK ) return result;
     return FRE_OK;
 }
 
@@ -113,16 +126,16 @@ FREResult FRENewObjectFromDate( NSDate* date, FREObject* asDate )
 FREResult FRENewObjectFromData( NSData* data, FREObject* asData )
 {
     FREResult result;
-    result = FRENewObject( "ByteArray", 0, NULL, asData, NULL );
+    result = FRENewObject( "flash.utils.ByteArray", 0, NULL, asData, NULL );
     if( result != FRE_OK ) return result;
     result = FRESetObjectPropertyInt( *asData, "length", data.length );
     if( result != FRE_OK ) return result;
     
     FREByteArray actualBytes;
-    result = FREAcquireByteArray( asData, &actualBytes );
+    result = FREAcquireByteArray( *asData, &actualBytes );
     if( result != FRE_OK ) return result;
     memcpy( actualBytes.bytes, data.bytes, data.length );
-    result = FREReleaseByteArray(&actualBytes);    
+    result = FREReleaseByteArray( *asData );
     if( result != FRE_OK ) return result;
     
     return FRE_OK;

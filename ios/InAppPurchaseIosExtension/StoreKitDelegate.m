@@ -45,6 +45,8 @@
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
 {
+    [request release];
+    [response retain];
     NSString* code = [self storeReturnObject:response];
     for( SKProduct* product in response.products )
     {
@@ -67,14 +69,17 @@
         switch (transaction.transactionState)
         {
             case SKPaymentTransactionStatePurchased:
+                [transaction retain];
                 code = [self storeReturnObject:transaction];
                 FREDispatchStatusEventAsync( context, code.UTF8String, transactionPurchased );
                 break;
             case SKPaymentTransactionStateFailed:
+                [transaction retain];
                 code = [self storeReturnObject:transaction];
                 FREDispatchStatusEventAsync( context, code.UTF8String, transactionFailed );
                 break;
             case SKPaymentTransactionStateRestored:
+                [transaction retain];
                 code = [self storeReturnObject:transaction];
                 FREDispatchStatusEventAsync( context, code.UTF8String, transactionRestored );
             default:

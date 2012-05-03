@@ -54,13 +54,15 @@ FREResult FRENewObjectFromSKProduct( SKProduct* product, FREObject* asProduct )
     result = FRESetObjectPropertyString( *asProduct, "desc", product.localizedDescription );
     if( result != FRE_OK ) return result;
     
+    result = FRESetObjectPropertyNum( *asProduct, "price", product.price.doubleValue );
+    if( result != FRE_OK ) return result;
+
     NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
-    [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
     [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
     [numberFormatter setLocale:product.priceLocale];
-    NSString *formattedString = [numberFormatter stringFromNumber:product.price];
+    NSString *formattedPrice = [numberFormatter stringFromNumber:product.price];
     
-    result = FRESetObjectPropertyString( *asProduct, "price", formattedString );
+    result = FRESetObjectPropertyString( *asProduct, "formattedPrice", formattedPrice );
     if( result != FRE_OK ) return result;
     
     result = FRESetObjectPropertyString( *asProduct, "priceLocale", [product.priceLocale localeIdentifier] );
@@ -76,16 +78,13 @@ FREResult FRENewObjectFromSKTransaction( SKPaymentTransaction* transaction, FREO
     result = FRENewObject( ASTransaction, 0, NULL, asTransaction, NULL);
     if( result != FRE_OK ) return result;
     
-    result = FRESetObjectPropertyString( *asTransaction, "productIdentifier", transaction.payment.productIdentifier );
+    result = FRESetObjectPropertyString( *asTransaction, "productId", transaction.payment.productIdentifier );
     if( result != FRE_OK ) return result;
     
     result = FRESetObjectPropertyInt( *asTransaction, "productQuantity", transaction.payment.quantity );
     if( result != FRE_OK ) return result;
     
-    result = FRESetObjectPropertyString( *asTransaction, "transactionIdentifier", transaction.transactionIdentifier );
-    if( result != FRE_OK ) return result;
-    
-    result = FRESetObjectPropertyError( *asTransaction, "error", transaction.error );
+    result = FRESetObjectPropertyString( *asTransaction, "id", transaction.transactionIdentifier );
     if( result != FRE_OK ) return result;
     
     result = FRESetObjectPropertyDate( *asTransaction, "date", transaction.transactionDate );
@@ -93,6 +92,12 @@ FREResult FRENewObjectFromSKTransaction( SKPaymentTransaction* transaction, FREO
     
     result = FRESetObjectPropertyInt( *asTransaction, "state", transaction.transactionState );
     if( result != FRE_OK ) return result;
+    
+    if( transaction.transactionState == SKPaymentTransactionStateFailed )
+    {
+        result = FRESetObjectPropertyError( *asTransaction, "error", transaction.error );
+        if( result != FRE_OK ) return result;
+    }
     
     if( transaction.transactionState == SKPaymentTransactionStatePurchased )
     {
@@ -167,6 +172,7 @@ DEFINE_ANE_FUNCTION( getStoredProductInformation )
         [response release];
         return products;
     }
+    [response release];
     return NULL;
 }
 
@@ -249,8 +255,9 @@ DEFINE_ANE_FUNCTION( getCurrentTransactions )
     {
         return NULL;
     }
+
     FREObject asTransactions;
-    if ( FRENewObject( "Array", 0, NULL, &asTransactions, NULL ) == FRE_OK && FRESetArrayLength( products, transactions.count ) == FRE_OK )
+    if ( FRENewObject( "Array", 0, NULL, &asTransactions, NULL ) == FRE_OK && FRESetArrayLength( asTransactions, transactions.count ) == FRE_OK )
     {
         int nextIndex = 0;
         for( SKPaymentTransaction* transaction in transactions )
@@ -281,8 +288,10 @@ DEFINE_ANE_FUNCTION( getStoredTransaction )
     FREObject asTransaction;
     if( FRENewObjectFromSKTransaction( transaction, &asTransaction ) == FRE_OK )
     {
+        [transaction release];
         return asTransaction;
     }
+    [transaction release];
     return NULL;
 }
 
@@ -303,10 +312,8 @@ void InAppPurchaseContextInitializer( void* extData, const uint8_t* ctxType, FRE
 	*numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
 	*functionsToSet = functionMap;
     
-    observer = [[StoreKitDelegate alloc] init];
+    observer = [[StoreKitDelegate alloc] initWithContext:ctx andReturnObjects:returnObjects andProducts:products];
     [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
-    products = [[NSMutableDictionary alloc] init];
-    returnObjects = [[NSMutableDictionary alloc] init];
 }
 
 void InAppPurchaseContextFinalizer( FREContext ctx )
@@ -319,6 +326,9 @@ void InAppPurchaseExtensionInitializer( void** extDataToSet, FREContextInitializ
     extDataToSet = NULL;  // This example does not use any extension data. 
     *ctxInitializerToSet = &InAppPurchaseContextInitializer;
     *ctxFinalizerToSet = &InAppPurchaseContextFinalizer;
+    
+    products = [[NSMutableDictionary alloc] init];
+    returnObjects = [[NSMutableDictionary alloc] init];
 }
 
 void InAppPurchaseExtensionFinalizer()

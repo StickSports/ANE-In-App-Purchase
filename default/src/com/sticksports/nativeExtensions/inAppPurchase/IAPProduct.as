@@ -6,6 +6,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		public var desc : String;
 		public var id : String;
 		public var priceLocale : String;
-		public var price : String;
+		public var price : Number;
+		public var formattedPrice : String;
 	}
 }

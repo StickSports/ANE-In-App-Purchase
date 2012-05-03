@@ -4,13 +4,13 @@ package com.sticksports.nativeExtensions.inAppPurchase
 	
 	public class IAPTransaction
 	{
-		public var error : Error;
-		public var productIdentifier : String;
+		public var id : String;
+		public var productId : String;
 		public var productQuantity : int;
 		public var date : Date;
-		public var transactionIdentifier : String;
-		public var receipt : ByteArray;
 		public var state : int;
+		public var error : Error;
+		public var receipt : ByteArray;
 		public var originalTransaction : IAPTransaction;
 	}
 }

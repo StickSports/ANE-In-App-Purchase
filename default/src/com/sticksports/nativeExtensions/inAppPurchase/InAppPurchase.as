@@ -51,7 +51,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			return false;
 		}
 		
-		public static function restoreTransactions() : void
+		public static function restorePurchases() : void
 		{
 			throwNotSupportedError();
 		}

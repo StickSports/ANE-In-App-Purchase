@@ -33,7 +33,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			{
 				initialised = true;
 				
-				extensionContext = ExtensionContext.createExtensionContext( "com.sticksports.nativeExtensions.GameCenter", null );
+				extensionContext = ExtensionContext.createExtensionContext( "com.sticksports.nativeExtensions.InAppPurchase", null );
 				extensionContext.call( NativeMethods.initNativeCode );
 				
 				extensionContext.addEventListener( StatusEvent.STATUS, handleStatusEvent );
@@ -42,7 +42,6 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		
 		private static function handleStatusEvent( event : StatusEvent ) : void
 		{
-			trace( "InAppPurchase internal event", event.level );
 			switch( event.level )
 			{
 				case InternalMessages.fetchProductsFailed :
@@ -134,7 +133,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			return success;
 		}
 		
-		public static function restoreTransactions() : void
+		public static function restorePurchases() : void
 		{
 			extensionContext.call( NativeMethods.restoreTransactions );
 		}
