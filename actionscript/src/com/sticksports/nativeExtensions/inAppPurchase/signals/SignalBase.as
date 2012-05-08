@@ -2,7 +2,7 @@
  * Based on ideas used in Robert Penner's AS3-signals - https://github.com/robertpenner/as3-signals
  */
 
-package net.richardlord.signals
+package com.sticksports.nativeExtensions.inAppPurchase.signals
 {
 	import flash.utils.Dictionary;
 
@@ -15,7 +15,6 @@ package net.richardlord.signals
 		internal var tail : ListenerNode;
 		
 		private var nodes : Dictionary;
-		private var listenerNodePool : ListenerNodePool;
 		private var toAddHead : ListenerNode;
 		private var toAddTail : ListenerNode;
 		private var dispatching : Boolean;
@@ -23,7 +22,6 @@ package net.richardlord.signals
 		public function SignalBase()
 		{
 			nodes = new Dictionary( true );
-			listenerNodePool = new ListenerNodePool();
 		}
 		
 		protected function startDispatch() : void
@@ -50,7 +48,6 @@ package net.richardlord.signals
 				toAddHead = null;
 				toAddTail = null;
 			}
-			listenerNodePool.releaseCache();
 		}
 
 		public function add( listener : Function ) : void
@@ -59,7 +56,7 @@ package net.richardlord.signals
 			{
 				return;
 			}
-			var node : ListenerNode = listenerNodePool.get();
+			var node : ListenerNode = new ListenerNode();
 			node.listener = listener;
 			nodes[ listener ] = node;
 			addNode( node );
@@ -71,7 +68,7 @@ package net.richardlord.signals
 			{
 				return;
 			}
-			var node : ListenerNode = listenerNodePool.get();
+			var node : ListenerNode = new ListenerNode();
 			node.listener = listener;
 			node.once = true;
 			nodes[ listener ] = node;
@@ -138,14 +135,6 @@ package net.richardlord.signals
 					node.next.previous = node.previous;
 				}
 				delete nodes[ listener ];
-				if( dispatching )
-				{
-					listenerNodePool.cache( node );
-				}
-				else
-				{
-					listenerNodePool.dispose( node );
-				}
 			}
 		}
 		

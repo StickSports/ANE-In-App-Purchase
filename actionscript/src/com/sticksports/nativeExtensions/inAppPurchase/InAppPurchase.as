@@ -1,22 +1,22 @@
 package com.sticksports.nativeExtensions.inAppPurchase
 {
-	import net.richardlord.signals.Signal0;
-	import net.richardlord.signals.Signal1;
-
+	import com.sticksports.nativeExtensions.inAppPurchase.signals.IAPSignal0;
+	import com.sticksports.nativeExtensions.inAppPurchase.signals.IAPSignal1;
 	import flash.events.StatusEvent;
 	import flash.external.ExtensionContext;
 
+
 	public class InAppPurchase
 	{
-		public static var productInformationReceived : Signal1 = new Signal1( Array );
-		public static var productInformationFailed : Signal0 = new Signal0();
+		public static var productInformationReceived : IAPSignal1 = new IAPSignal1( Array );
+		public static var productInformationFailed : IAPSignal0 = new IAPSignal0();
 		
-		public static var restoreTransactionsComplete : Signal0 = new Signal0();
-		public static var restoreTransactionsFailed : Signal1 = new Signal1( String );
+		public static var restoreTransactionsComplete : IAPSignal0 = new IAPSignal0();
+		public static var restoreTransactionsFailed : IAPSignal1 = new IAPSignal1( String );
 		
-		public static var transactionPurchased : Signal1 = new Signal1( IAPTransaction );
-		public static var transactionFailed : Signal1 = new Signal1( IAPTransaction );
-		public static var transactionRestored : Signal1 = new Signal1( IAPTransaction );
+		public static var transactionPurchased : IAPSignal1 = new IAPSignal1( IAPTransaction );
+		public static var transactionFailed : IAPSignal1 = new IAPSignal1( IAPTransaction );
+		public static var transactionRestored : IAPSignal1 = new IAPSignal1( IAPTransaction );
 		
 		private static var extensionContext : ExtensionContext = null;
 		private static var initialised : Boolean = false;

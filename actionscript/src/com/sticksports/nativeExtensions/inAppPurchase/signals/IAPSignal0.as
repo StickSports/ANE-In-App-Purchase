@@ -2,14 +2,14 @@
  * Based on ideas used in Robert Penner's AS3-signals - https://github.com/robertpenner/as3-signals
  */
 
-package net.richardlord.signals
+package com.sticksports.nativeExtensions.inAppPurchase.signals
 {
 	/**
 	 * Provides a fast signal for use where no parameters are dispatched with the signal.
 	 */
-	public class Signal0 extends SignalBase
+	public class IAPSignal0 extends SignalBase
 	{
-		public function Signal0()
+		public function IAPSignal0()
 		{
 		}
 

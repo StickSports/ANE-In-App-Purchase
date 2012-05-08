@@ -1,4 +1,4 @@
-package net.richardlord.signals
+package com.sticksports.nativeExtensions.inAppPurchase.signals
 {
 	/**
 	 * A node in the list of listeners in a signal.

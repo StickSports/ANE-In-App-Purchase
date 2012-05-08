@@ -36,7 +36,6 @@
 			<arg line='-output ../temp/swc/${name}.swc'/>
 			<arg line='-swf-version=13'/>
 			<arg line='-external-library-path+="${sdk.home}/frameworks/libs/air/airglobal.swc"'/>
-			<arg line='-source-path+="../libs/src"'/>
 			<arg line='-include-classes ${classlist}'/>
 		</exec>
 
@@ -61,7 +60,6 @@
 			<arg line='-output ../temp/default/${name}.swc'/>
 			<arg line='-swf-version=13'/>
 			<arg line='-external-library-path+="${sdk.home}/frameworks/libs/air/airglobal.swc"'/>
-			<arg line='-source-path+="../libs/src"'/>
 			<arg line='-include-classes ${classlist2}'/>
 		</exec>
 

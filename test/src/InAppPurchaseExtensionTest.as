@@ -259,8 +259,8 @@
 			feedback.appendText( "\n  id: " + transaction.id );
 			feedback.appendText( "\n    product: " + transaction.productId );
 			feedback.appendText( "\n    quantity: " + transaction.productQuantity );
-			feedback.appendText( "\n    date: " + transaction.date );
 			feedback.appendText( "\n    state: " + transaction.state );
+			feedback.appendText( "\n    date: " + transaction.date );
 			if( transaction.error )
 			{
 				feedback.appendText( "\n    error: " + transaction.error.errorID + ", " + transaction.error.errorID );
@@ -275,8 +275,8 @@
 				feedback.appendText( "\n    id: " + transaction.originalTransaction.id );
 				feedback.appendText( "\n      product: " + transaction.originalTransaction.productId );
 				feedback.appendText( "\n      quantity: " + transaction.originalTransaction.productQuantity );
-				feedback.appendText( "\n      date: " + transaction.originalTransaction.date );
 				feedback.appendText( "\n      state: " + transaction.originalTransaction.state );
+				feedback.appendText( "\n      date: " + transaction.originalTransaction.date );
 			}
 		}
 		
