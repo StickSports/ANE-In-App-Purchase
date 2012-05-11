@@ -90,10 +90,10 @@
 		
 		private function createButtons() : void
 		{
-			var tf : TextField = createButton( "isSupported" );
+			var tf : TextField = createButton( "canMakePayments" );
 			tf.x = 10;
 			tf.y = 10;
-			tf.addEventListener( MouseEvent.MOUSE_DOWN, checkSupported );
+			tf.addEventListener( MouseEvent.MOUSE_DOWN, checkPayments );
 			addChild( tf );
 			
 			tf = createButton( "getProducts" );
@@ -176,9 +176,9 @@
 			return textField;
 		}
 		
-		private function checkSupported( event : MouseEvent ) : void
+		private function checkPayments( event : MouseEvent ) : void
 		{
-			feedback.text = "InAppPurchase.isSupported:\n  " + InAppPurchase.isSupported;
+			feedback.text = "InAppPurchase.canMakePayments:\n  " + InAppPurchase.canMakePayments;
 		}
 		
 		private function getProducts( event : MouseEvent ) : void

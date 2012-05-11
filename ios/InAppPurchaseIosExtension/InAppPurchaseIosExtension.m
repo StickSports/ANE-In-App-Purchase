@@ -117,12 +117,7 @@ FREResult FRENewObjectFromSKTransaction( SKPaymentTransaction* transaction, FREO
     return FRE_OK;
 }
 
-DEFINE_ANE_FUNCTION( initNativeCode )
-{
-    return NULL;
-}
-
-DEFINE_ANE_FUNCTION( isSupported )
+DEFINE_ANE_FUNCTION( canMakePayments )
 {
     uint32_t retValue = ([SKPaymentQueue canMakePayments]) ? 1 : 0;
     
@@ -298,8 +293,7 @@ DEFINE_ANE_FUNCTION( getStoredTransaction )
 void InAppPurchaseContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet )
 {
     static FRENamedFunction functionMap[] = {
-        MAP_FUNCTION( initNativeCode, NULL ),
-        MAP_FUNCTION( isSupported, NULL ),
+        MAP_FUNCTION( canMakePayments, NULL ),
         MAP_FUNCTION( getProductInformation, NULL ),
         MAP_FUNCTION( getStoredProductInformation, NULL ),
         MAP_FUNCTION( purchaseProduct, NULL ),

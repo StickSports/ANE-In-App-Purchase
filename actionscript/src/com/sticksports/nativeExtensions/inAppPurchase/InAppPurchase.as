@@ -21,9 +21,6 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		private static var extensionContext : ExtensionContext = null;
 		private static var initialised : Boolean = false;
 
-		private static var _isSupported : Boolean;
-		private static var _isSupportedTested : Boolean;
-
 		/**
 		 * Initialise the extension
 		 */
@@ -32,10 +29,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			if ( !initialised )
 			{
 				initialised = true;
-				
 				extensionContext = ExtensionContext.createExtensionContext( "com.sticksports.nativeExtensions.InAppPurchase", null );
-				extensionContext.call( NativeMethods.initNativeCode );
-				
 				extensionContext.addEventListener( StatusEvent.STATUS, handleStatusEvent );
 			}
 		}
@@ -93,13 +87,13 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		 */
 		public static function get isSupported() : Boolean
 		{
-			if( !_isSupportedTested )
-			{
-				_isSupportedTested = true;
-				init();
-				_isSupported = extensionContext.call( NativeMethods.isSupported ) as Boolean;
-			}
-			return _isSupported;
+			return true;
+		}
+		
+		public static function get canMakePayments() : Boolean
+		{
+			init();
+			return extensionContext.call( NativeMethods.canMakePayments ) as Boolean;
 		}
 		
 		public static function fetchProductInformation( ...productIds ) : void

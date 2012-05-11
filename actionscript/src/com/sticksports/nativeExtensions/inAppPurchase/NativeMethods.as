@@ -2,8 +2,7 @@ package com.sticksports.nativeExtensions.inAppPurchase
 {
 	internal class NativeMethods
 	{
-		internal static const initNativeCode : String = "initNativeCode";
-		internal static const isSupported : String = "isSupported";
+		internal static const canMakePayments : String = "canMakePayments";
 		internal static const getProductInformation : String = "getProductInformation";
 		internal static const getStoredProductInformation : String = "getStoredProductInformation";
 		internal static const purchaseProduct : String = "purchaseProduct";

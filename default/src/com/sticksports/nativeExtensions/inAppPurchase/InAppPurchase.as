@@ -30,6 +30,11 @@ package com.sticksports.nativeExtensions.inAppPurchase
 			return false;
 		}
 		
+		public static function get canMakePayments() : Boolean
+		{
+			return false;
+		}
+
 		private static function throwNotSupportedError() : void
 		{
 			throw new Error( "In-App Purchase is not supported on this device." );
