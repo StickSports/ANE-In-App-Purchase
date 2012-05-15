@@ -74,9 +74,16 @@
                 FREDispatchStatusEventAsync( context, code.UTF8String, transactionPurchased );
                 break;
             case SKPaymentTransactionStateFailed:
-                [transaction retain];
-                code = [self storeReturnObject:transaction];
-                FREDispatchStatusEventAsync( context, code.UTF8String, transactionFailed );
+                if( transaction.transactionIdentifier )
+                {
+                    [transaction retain];
+                    code = [self storeReturnObject:transaction];
+                    FREDispatchStatusEventAsync( context, code.UTF8String, transactionFailed );
+                }
+                else // Caused by IAP being disabled. May be other causes.
+                {
+                    FREDispatchStatusEventAsync( context, "", transactionFailed );
+                }
                 break;
             case SKPaymentTransactionStateRestored:
                 [transaction retain];

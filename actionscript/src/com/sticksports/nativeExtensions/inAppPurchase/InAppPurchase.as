@@ -60,24 +60,15 @@ package com.sticksports.nativeExtensions.inAppPurchase
 					break;
 				case InternalMessages.transactionPurchased :
 					var t1 : IAPTransaction = getReturnedTransaction( event.code );
-					if( t1 )
-					{
-						transactionPurchased.dispatch( t1 );
-					}
+					transactionPurchased.dispatch( t1 );
 					break;
 				case InternalMessages.transactionFailed :
 					var t2 : IAPTransaction = getReturnedTransaction( event.code );
-					if( t2 )
-					{
-						transactionFailed.dispatch( t2 );
-					}
+					transactionFailed.dispatch( t2 );
 					break;
 				case InternalMessages.transactionRestored :
 					var t3 : IAPTransaction = getReturnedTransaction( event.code );
-					if( t3 )
-					{
-						transactionRestored.dispatch( t3 );
-					}
+					transactionRestored.dispatch( t3 );
 					break;
 			}
 		}
@@ -139,12 +130,27 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		
 		private static function getReturnedProducts( key : String ) : Array
 		{
-			return extensionContext.call( NativeMethods.getStoredProductInformation, key ) as Array;
+			if( key )
+			{
+				return extensionContext.call( NativeMethods.getStoredProductInformation, key ) as Array;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		private static function getReturnedTransaction( key : String ) : IAPTransaction
 		{
-			return extensionContext.call( NativeMethods.getStoredTransaction, key ) as IAPTransaction;
+			if( key )
+			{
+				trace( "get transaction", key );
+				return extensionContext.call( NativeMethods.getStoredTransaction, key ) as IAPTransaction;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		
 		/**

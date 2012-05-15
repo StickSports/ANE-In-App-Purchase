@@ -76,9 +76,16 @@
 		
 		private function purchaseFailed( transaction : IAPTransaction ) : void
 		{
-			failedPurchases[ transaction.id ] = transaction;
-			feedback.appendText( "\n> transactionFailed" );
-			outputTransactionDetails( transaction );
+			if( transaction )
+			{
+				failedPurchases[ transaction.id ] = transaction;
+				feedback.appendText( "\n> transactionFailed" );
+				outputTransactionDetails( transaction );
+			}
+			else
+			{
+				feedback.appendText( "\n> transactionFailed. No transaction object returned." );
+			}
 		}
 		
 		private function purchaseRestored( transaction : IAPTransaction ) : void
