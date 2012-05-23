@@ -14,7 +14,7 @@ h3. Building
 
 Requirements - Adobe Air SDK 3.1 or later, XCode IDE, iOS SDK 5.0 or later
 
-* Add the FlashRuntimeExtensions.h file from the Adobe Air sdk to the ios/GameCenterIosExtension folder in the project.
+* Add the FlashRuntimeExtensions.h file from the Adobe Air sdk to the ios/InAppPurchaseIosExtension folder in the project.
 * Create a copy of the build/example.build.config file in the build folder, calling it build.config and change the properties in this file to match your system.
 ** A certificate is required by the build script. This may be a self-signed certificate created by Adobe Air.
 * Run the ant build script build.xml. This creates the native extension, and default swc file, inside the bin folder.
@@ -27,7 +27,7 @@ A simple test project is included for testing the extension. To build this air p
 * Create a test app in iTunesConnect and add In-App Purchases to the app.
 ** Add a consumable purchase to the project with the id "consumable1".
 ** Add a non-consumable purchase to the project with the id "nonconsumable1".
-* Create a copy of the test/build/example.GameCenterExtensionTest-app.xml file in the test/build folder, calling it GameCenterExtensionTest-app.xml and change the id in this file to match the test app you just created.
+* Create a copy of the test/build/example.InAppPurchaseExtensionTest-app.xml file in the test/build folder, calling it InAppPurchaseExtensionTest-app.xml and change the id in this file to match the test app you just created.
 * Run the ant build script test/build.xml. This creates the test ipa inside the test/bin folder.
 
 h3. Using the extension
@@ -89,8 +89,7 @@ To restore past non-consumable purchases
 Is asynchronous.
 
 Dispatches the signal
-* @InAppPurchase.transactionRestored@ with a parameter of type IAPTransaction
-once for each restored transaction.
+* @InAppPurchase.transactionRestored@ with a parameter of type IAPTransaction for each restored transaction.
 
 Throws an error if In-App Purchases are not supported
 
