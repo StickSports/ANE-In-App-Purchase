@@ -1,0 +1,132 @@
+h1. Air Native Extension for In-App Purchase integration on iOS
+
+This is an "Air native extension":http://www.adobe.com/devnet/air/native-extensions-for-air.html for In-App Purchase integration on the iOS platform.
+
+h3. Version
+
+This is version 0.5.0 of this extension.
+
+h3. Binary files
+
+The bin folder contains the compiled extension and the default swc, which can be used for local testing if required by your development environment (Flash Builder shouldn't need it, but other IDEs may).
+
+h3. Building
+
+Requirements - Adobe Air SDK 3.1 or later, XCode IDE, iOS SDK 5.0 or later
+
+* Add the FlashRuntimeExtensions.h file from the Adobe Air sdk to the ios/GameCenterIosExtension folder in the project.
+* Create a copy of the build/example.build.config file in the build folder, calling it build.config and change the properties in this file to match your system.
+** A certificate is required by the build script. This may be a self-signed certificate created by Adobe Air.
+* Run the ant build script build.xml. This creates the native extension, and default swc file, inside the bin folder.
+
+h3. The test project
+
+A simple test project is included for testing the extension. To build this air project
+
+* Create a copy of the test/build/example.build.config file in the test/build folder, calling it build.config and change the properties in this file to match your system.
+* Create a test app in iTunesConnect and add In-App Purchases to the app.
+** Add a consumable purchase to the project with the id "consumable1".
+** Add a non-consumable purchase to the project with the id "nonconsumable1".
+* Create a copy of the test/build/example.GameCenterExtensionTest-app.xml file in the test/build folder, calling it GameCenterExtensionTest-app.xml and change the id in this file to match the test app you just created.
+* Run the ant build script test/build.xml. This creates the test ipa inside the test/bin folder.
+
+h3. Using the extension
+
+h4. Test if In-App Purchases are supported by the operating system
+
+@InAppPurchase.isSupported;@
+
+Is a boolean.
+
+h4. Test if In-App Purchase payments are possible or have been disabled on the device
+
+@InAppPurchase.canMakePayments;@
+
+Is a boolean.
+
+If payments are blocked (in the iOS deveice settings) then other activities, like restoring existing purchases, are still possible.
+
+h4. Fetch product information
+
+@InAppPurchase.fetchProductInformation( ...productIds ) : void@
+
+Is asynchronous.
+
+Dispatches one of two signals
+* @InAppPurchase.productInformationReceived@ with a parameter of type Array, containing objects of type IAPProduct
+* @InAppPurchase.productInformationFailed@
+
+Throws an error if In-App Purchases are not supported
+
+h4. Purchase a product
+
+@InAppPurchase.purchaseProduct( productId : String, quantity : int = 1 ) : void@
+
+Is asynchronous.
+
+Dispatches one of two signals
+* @InAppPurchase.transactionPurchased@ with a parameter of type IAPTransaction
+* @InAppPurchase.transactionFailed@ with a parameter of type IAPTransaction
+
+Throws an error if In-App Purchases are not supported
+
+h4. Finish a transaction
+
+Transactions remain in the transaction queue until you mark them as finished. After handling a successful or failed purchase or restored transaction you should remove it from the transaction queue by calling this method.
+
+@InAppPurchase.finishTransaction( transactionId : String ) : Boolean@
+
+Returns true if the transaction was successfully marked as finished and removed from the transaction queue.
+
+Throws an error if In-App Purchases are not supported
+
+h4. Restore past purchases
+
+To restore past non-consumable purchases
+
+@InAppPurchase.restorePurchases() : void@
+
+Is asynchronous.
+
+Dispatches the signal
+* @InAppPurchase.transactionRestored@ with a parameter of type IAPTransaction
+once for each restored transaction.
+
+Throws an error if In-App Purchases are not supported
+
+h4. Get all transactions in the transactions queue
+
+@InAppPurchase.getCurrentTransactions() : Array@
+
+Returns an array of IAPTransaction objects.
+
+Throws an error if In-App Purchases are not supported
+
+h3. Example code
+
+You can see all the features in action in the source code of the test project.
+
+h3. Compiling your project
+
+This is an Air 3.1 extension. Specify the path to the iPhone SDK when compiling the project, using the functionality built in to your IDE or the platformsdk parameter if building with adt from the command line or a build script.
+
+h3. Developers
+
+* "Stick Sports":http://www.sticksports.com/mobile
+
+h2. License
+
+Author: Richard Lord
+Owner: Stick Sports Ltd.
+http://www.sticksports.com
+
+Copyright (c) 2011-2012, Stick Sports Ltd.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+* Neither the name of Stick Sports Ltd. or of this product, nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

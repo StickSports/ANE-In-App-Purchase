@@ -2,8 +2,8 @@
 	<id>yourAppId</id>
 	<filename>InAppPurchaseExtensionTest</filename>
 	<name>Dummy1</name>
-	<versionNumber>0.1.0</versionNumber>
-	<versionLabel>v0.1.0</versionLabel>
+	<versionNumber>0.5.0</versionNumber>
+	<versionLabel>v0.5.0</versionLabel>
 	<initialWindow>
 		<content>InAppPurchaseExtensionTest.swf</content>
 		<visible>true</visible>
