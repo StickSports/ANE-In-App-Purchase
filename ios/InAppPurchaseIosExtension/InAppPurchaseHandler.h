@@ -14,6 +14,7 @@
 {
 }
 
+- (id)initWithContext:(FREContext)extensionContext;
 - (NSString*) storeReturnObject:(id)object;
 - (id) getReturnObject:(NSString*) key;
 - (FREObject) canMakePayments;

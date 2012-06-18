@@ -82,7 +82,7 @@ void InAppPurchaseContextInitializer( void* extData, const uint8_t* ctxType, FRE
 	*numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
 	*functionsToSet = functionMap;
     
-    IAP_handler = [[InAppPurchaseHandler alloc] init];
+    IAP_handler = [[InAppPurchaseHandler alloc] initWithContext:ctx];
 }
 
 void InAppPurchaseContextFinalizer( FREContext ctx )

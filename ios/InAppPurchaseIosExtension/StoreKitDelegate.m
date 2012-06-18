@@ -31,7 +31,7 @@
     return key;
 }
 
-- (id)initWithContext:(FREContext)extensionContext andReturnObjects:(NSMutableDictionary*)objects andProducts:(NSMutableDictionary*)prods;
+- (id)initWithContext:(FREContext)extensionContext andReturnObjects:(NSMutableDictionary*)objects andProducts:(NSMutableDictionary*)prods
 {
     self = [super init];
     if( self )
@@ -107,6 +107,13 @@
 - (void)paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue *)queue
 {
     FREDispatchStatusEventAsync( context, "", restoreTransactionsComplete );
+}
+
+- (void)dealloc
+{
+    [returnObjects release];
+    [products release];
+    [super dealloc];
 }
 
 

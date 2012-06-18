@@ -14,6 +14,7 @@
 
 @interface InAppPurchaseHandler () {
 }
+@property FREContext context;
 @property (retain)NSMutableDictionary* returnObjects;
 @property (retain)NSMutableDictionary* products;
 @property (retain)StoreKitDelegate* observer;
@@ -22,7 +23,22 @@
 
 @implementation InAppPurchaseHandler
 
-@synthesize returnObjects, products, observer, converter;
+@synthesize context, returnObjects, products, observer, converter;
+
+- (id)initWithContext:(FREContext)extensionContext
+{
+    self = [super init];
+    if( self )
+    {
+        context = extensionContext;
+        returnObjects = [[NSMutableDictionary alloc] init];
+        products = [[NSMutableDictionary alloc] init];
+        observer = [[StoreKitDelegate alloc] initWithContext:context andReturnObjects:returnObjects andProducts:products];
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
+        converter = [[TypeConversion alloc] init];
+    }
+    return self;
+}
 
 - (NSString*) storeReturnObject:(id)object
 {
@@ -213,6 +229,15 @@
     }
     [transaction release];
     return NULL;
+}
+
+- (void)dealloc
+{
+    [returnObjects release];
+    [products release];
+    [observer release];
+    [converter release];
+    [super dealloc];
 }
 
 @end
