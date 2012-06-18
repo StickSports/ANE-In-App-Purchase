@@ -18,7 +18,4 @@
 #define transactionFailed "transactionFailed"
 #define transactionRestored "transactionRestored"
 
-#define ASProduct "com.sticksports.nativeExtensions.inAppPurchase.IAPProduct"
-#define ASTransaction "com.sticksports.nativeExtensions.inAppPurchase.IAPTransaction"
-
 #endif
