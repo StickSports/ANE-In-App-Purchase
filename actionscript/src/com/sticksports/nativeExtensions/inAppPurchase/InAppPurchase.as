@@ -125,7 +125,8 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		
 		public static function getCurrentTransactions() : Array
 		{
-			return extensionContext.call( NativeMethods.getCurrentTransactions ) as Array;
+			var transactions : Array = extensionContext.call( NativeMethods.getCurrentTransactions ) as Array;
+			return transactions;
 		}
 		
 		private static function getReturnedProducts( key : String ) : Array
@@ -144,7 +145,6 @@ package com.sticksports.nativeExtensions.inAppPurchase
 		{
 			if( key )
 			{
-				trace( "get transaction", key );
 				return extensionContext.call( NativeMethods.getStoredTransaction, key ) as IAPTransaction;
 			}
 			else

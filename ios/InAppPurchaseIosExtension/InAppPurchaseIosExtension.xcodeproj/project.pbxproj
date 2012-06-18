@@ -9,20 +9,22 @@
 /* Begin PBXBuildFile section */
 		79AA012A154FFE4C003F5640 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79AA0129154FFE4C003F5640 /* Foundation.framework */; };
 		79AA0139154FFF74003F5640 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 79AA0138154FFF74003F5640 /* FlashRuntimeExtensions.h */; };
-		79AA013F155001A2003F5640 /* InAppPurchaseIosExtension-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 79AA013E155001A2003F5640 /* InAppPurchaseIosExtension-Prefix.pch */; };
 		79AA014115500236003F5640 /* InAppPurchaseIosExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AA014015500236003F5640 /* InAppPurchaseIosExtension.m */; };
 		79AA01431550025B003F5640 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79AA01421550025B003F5640 /* StoreKit.framework */; };
 		79AA014A1550030A003F5640 /* FRETypeConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 79AA01481550030A003F5640 /* FRETypeConversion.h */; };
 		79AA014B1550030A003F5640 /* FRETypeConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AA01491550030A003F5640 /* FRETypeConversion.m */; };
 		79AA014E15503904003F5640 /* StoreKitDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 79AA014C15503904003F5640 /* StoreKitDelegate.h */; };
 		79AA014F15503904003F5640 /* StoreKitDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AA014D15503904003F5640 /* StoreKitDelegate.m */; };
+		79ED1AF8158F373E003B20F6 /* InAppPurchaseHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 79ED1AF6158F373E003B20F6 /* InAppPurchaseHandler.h */; };
+		79ED1AF9158F373E003B20F6 /* InAppPurchaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 79ED1AF7158F373E003B20F6 /* InAppPurchaseHandler.m */; };
+		79ED1AFC158F3782003B20F6 /* TypeConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 79ED1AFA158F3782003B20F6 /* TypeConversion.h */; };
+		79ED1AFD158F3782003B20F6 /* TypeConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 79ED1AFB158F3782003B20F6 /* TypeConversion.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		79AA0126154FFE4C003F5640 /* libInAppPurchaseIosExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libInAppPurchaseIosExtension.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79AA0129154FFE4C003F5640 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79AA0138154FFF74003F5640 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
-		79AA013E155001A2003F5640 /* InAppPurchaseIosExtension-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InAppPurchaseIosExtension-Prefix.pch"; sourceTree = "<group>"; };
 		79AA014015500236003F5640 /* InAppPurchaseIosExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseIosExtension.m; sourceTree = "<group>"; };
 		79AA01421550025B003F5640 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		79AA01481550030A003F5640 /* FRETypeConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRETypeConversion.h; sourceTree = "<group>"; };
@@ -30,6 +32,10 @@
 		79AA014C15503904003F5640 /* StoreKitDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreKitDelegate.h; sourceTree = "<group>"; };
 		79AA014D15503904003F5640 /* StoreKitDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreKitDelegate.m; sourceTree = "<group>"; };
 		79AA015115504185003F5640 /* NativeMessages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NativeMessages.h; sourceTree = "<group>"; };
+		79ED1AF6158F373E003B20F6 /* InAppPurchaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAppPurchaseHandler.h; sourceTree = "<group>"; };
+		79ED1AF7158F373E003B20F6 /* InAppPurchaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAppPurchaseHandler.m; sourceTree = "<group>"; };
+		79ED1AFA158F3782003B20F6 /* TypeConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeConversion.h; sourceTree = "<group>"; };
+		79ED1AFB158F3782003B20F6 /* TypeConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeConversion.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,13 +54,16 @@
 		79AA011B154FFE4C003F5640 = {
 			isa = PBXGroup;
 			children = (
+				79ED1AFA158F3782003B20F6 /* TypeConversion.h */,
+				79ED1AFB158F3782003B20F6 /* TypeConversion.m */,
+				79ED1AF6158F373E003B20F6 /* InAppPurchaseHandler.h */,
+				79ED1AF7158F373E003B20F6 /* InAppPurchaseHandler.m */,
 				79AA015115504185003F5640 /* NativeMessages.h */,
 				79AA01481550030A003F5640 /* FRETypeConversion.h */,
 				79AA01491550030A003F5640 /* FRETypeConversion.m */,
 				79AA014015500236003F5640 /* InAppPurchaseIosExtension.m */,
 				79AA014C15503904003F5640 /* StoreKitDelegate.h */,
 				79AA014D15503904003F5640 /* StoreKitDelegate.m */,
-				79AA013E155001A2003F5640 /* InAppPurchaseIosExtension-Prefix.pch */,
 				79AA0138154FFF74003F5640 /* FlashRuntimeExtensions.h */,
 				79AA0128154FFE4C003F5640 /* Frameworks */,
 				79AA0127154FFE4C003F5640 /* Products */,
@@ -86,9 +95,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				79AA0139154FFF74003F5640 /* FlashRuntimeExtensions.h in Headers */,
-				79AA013F155001A2003F5640 /* InAppPurchaseIosExtension-Prefix.pch in Headers */,
 				79AA014A1550030A003F5640 /* FRETypeConversion.h in Headers */,
 				79AA014E15503904003F5640 /* StoreKitDelegate.h in Headers */,
+				79ED1AF8158F373E003B20F6 /* InAppPurchaseHandler.h in Headers */,
+				79ED1AFC158F3782003B20F6 /* TypeConversion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +156,8 @@
 				79AA014115500236003F5640 /* InAppPurchaseIosExtension.m in Sources */,
 				79AA014B1550030A003F5640 /* FRETypeConversion.m in Sources */,
 				79AA014F15503904003F5640 /* StoreKitDelegate.m in Sources */,
+				79ED1AF9158F373E003B20F6 /* InAppPurchaseHandler.m in Sources */,
+				79ED1AFD158F3782003B20F6 /* TypeConversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +211,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/InAppPurchaseIosExtension.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InAppPurchaseIosExtension-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -213,7 +225,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/InAppPurchaseIosExtension.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "InAppPurchaseIosExtension-Prefix.pch";
+				GCC_PREFIX_HEADER = "";
 				LINK_WITH_STANDARD_LIBRARIES = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -241,6 +253,7 @@
 				79AA0135154FFE4C003F5640 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
