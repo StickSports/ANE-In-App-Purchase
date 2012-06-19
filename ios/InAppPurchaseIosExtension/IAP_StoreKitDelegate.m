@@ -6,17 +6,17 @@
 //  Copyright (c) 2012 Stick Sports Ltd. All rights reserved.
 //
 
-#import "StoreKitDelegate.h"
-#import "NativeMessages.h"
+#import "IAP_StoreKitDelegate.h"
+#import "IAP_NativeMessages.h"
 
-@interface StoreKitDelegate () {
+@interface IAP_StoreKitDelegate () {
 }
 @property FREContext context;
 @property (retain)NSMutableDictionary* returnObjects;
 @property (retain)NSMutableDictionary* products;
 @end
 
-@implementation StoreKitDelegate
+@implementation IAP_StoreKitDelegate
 
 @synthesize context, returnObjects, products;
 

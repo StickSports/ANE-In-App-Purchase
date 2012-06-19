@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 Stick Sports Ltd. All rights reserved.
 //
 
-#import "TypeConversion.h"
+#import "IAP_TypeConversion.h"
 
 #define ASProduct "com.sticksports.nativeExtensions.inAppPurchase.IAPProduct"
 #define ASTransaction "com.sticksports.nativeExtensions.inAppPurchase.IAPTransaction"
 
-@implementation TypeConversion
+@implementation IAP_TypeConversion
 
 - (FREResult) FREGetObject:(FREObject)object asString:(NSString**)value;
 {

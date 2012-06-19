@@ -7,18 +7,17 @@
 //
 
 #import "InAppPurchaseHandler.h"
-#import "FRETypeConversion.h"
 #import <StoreKit/StoreKit.h>
-#import "StoreKitDelegate.h"
-#import "TypeConversion.h"
+#import "IAP_StoreKitDelegate.h"
+#import "IAP_TypeConversion.h"
 
 @interface InAppPurchaseHandler () {
 }
 @property FREContext context;
 @property (retain)NSMutableDictionary* returnObjects;
 @property (retain)NSMutableDictionary* products;
-@property (retain)StoreKitDelegate* observer;
-@property (retain)TypeConversion* converter;
+@property (retain)IAP_StoreKitDelegate* observer;
+@property (retain)IAP_TypeConversion* converter;
 @end
 
 @implementation InAppPurchaseHandler
@@ -33,9 +32,9 @@
         context = extensionContext;
         returnObjects = [[NSMutableDictionary alloc] init];
         products = [[NSMutableDictionary alloc] init];
-        observer = [[StoreKitDelegate alloc] initWithContext:context andReturnObjects:returnObjects andProducts:products];
+        observer = [[IAP_StoreKitDelegate alloc] initWithContext:context andReturnObjects:returnObjects andProducts:products];
         [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
-        converter = [[TypeConversion alloc] init];
+        converter = [[IAP_TypeConversion alloc] init];
     }
     return self;
 }

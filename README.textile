@@ -4,7 +4,7 @@ This is an "Air native extension":http://www.adobe.com/devnet/air/native-extensi
 
 h3. Version
 
-This is version 0.5.0 of this extension.
+This is version 0.6.0 of this extension.
 
 h3. Binary files
 

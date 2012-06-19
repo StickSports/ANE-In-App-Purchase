@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Stick Sports Ltd. All rights reserved.
 //
 
-#ifndef InAppPurchaseIosExtension_NativeMessages_h
-#define InAppPurchaseIosExtension_NativeMessages_h
+#ifndef InAppPurchaseIosExtension_IAP_NativeMessages_h
+#define InAppPurchaseIosExtension_IAP_NativeMessages_h
 
 #define fetchProductsFailed "fetchProductsFailed"
 #define fetchProductsSuccess "fetchProductsSuccess"

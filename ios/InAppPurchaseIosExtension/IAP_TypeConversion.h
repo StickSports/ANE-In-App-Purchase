@@ -10,7 +10,7 @@
 #import <StoreKit/StoreKit.h>
 #import "FlashRuntimeExtensions.h"
 
-@interface TypeConversion : NSObject
+@interface IAP_TypeConversion : NSObject
 {
 }
 

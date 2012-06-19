@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "FlashRuntimeExtensions.h"
-#import "FRETypeConversion.h"
 #import <StoreKit/StoreKit.h>
 #import "InAppPurchaseHandler.h"
-#import "NativeMessages.h"
+#import "IAP_NativeMessages.h"
 
 #define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
 
@@ -19,7 +18,7 @@
 
 InAppPurchaseHandler* IAP_handler;
 
-DEFINE_ANE_FUNCTION( canMakePayments )
+DEFINE_ANE_FUNCTION( IAP_canMakePayments )
 {
     uint32_t retValue = ([SKPaymentQueue canMakePayments]) ? 1 : 0;
     
@@ -31,37 +30,37 @@ DEFINE_ANE_FUNCTION( canMakePayments )
     return NULL;
 }
 
-DEFINE_ANE_FUNCTION( getProductInformation )
+DEFINE_ANE_FUNCTION( IAP_getProductInformation )
 {
     return [IAP_handler getProductInformationForIds:argv[0]];
 }
 
-DEFINE_ANE_FUNCTION( getStoredProductInformation )
+DEFINE_ANE_FUNCTION( IAP_getStoredProductInformation )
 {
     return [IAP_handler getStoredProductInformation:argv[0]];
 }
 
-DEFINE_ANE_FUNCTION( purchaseProduct )
+DEFINE_ANE_FUNCTION( IAP_purchaseProduct )
 {
     return [IAP_handler purchaseProduct:argv[0] quantity:argv[1]];
 }
 
-DEFINE_ANE_FUNCTION( finishTransaction )
+DEFINE_ANE_FUNCTION( IAP_finishTransaction )
 {
     return [IAP_handler finishTransaction:argv[0]];
 }
 
-DEFINE_ANE_FUNCTION( restoreTransactions )
+DEFINE_ANE_FUNCTION( IAP_restoreTransactions )
 {
     return [IAP_handler restoreTransactions];
 }
 
-DEFINE_ANE_FUNCTION( getCurrentTransactions )
+DEFINE_ANE_FUNCTION( IAP_getCurrentTransactions )
 {
     return [IAP_handler getCurrentTransactions];
 }
 
-DEFINE_ANE_FUNCTION( getStoredTransaction )
+DEFINE_ANE_FUNCTION( IAP_getStoredTransaction )
 {
     return [IAP_handler getStoredTransaction:argv[0]];
 }
@@ -69,14 +68,14 @@ DEFINE_ANE_FUNCTION( getStoredTransaction )
 void InAppPurchaseContextInitializer( void* extData, const uint8_t* ctxType, FREContext ctx, uint32_t* numFunctionsToSet, const FRENamedFunction** functionsToSet )
 {
     static FRENamedFunction functionMap[] = {
-        MAP_FUNCTION( canMakePayments, NULL ),
-        MAP_FUNCTION( getProductInformation, NULL ),
-        MAP_FUNCTION( getStoredProductInformation, NULL ),
-        MAP_FUNCTION( purchaseProduct, NULL ),
-        MAP_FUNCTION( finishTransaction, NULL ),
-        MAP_FUNCTION( restoreTransactions, NULL ),
-        MAP_FUNCTION( getCurrentTransactions, NULL ),
-        MAP_FUNCTION( getStoredTransaction, NULL )
+        MAP_FUNCTION( IAP_canMakePayments, NULL ),
+        MAP_FUNCTION( IAP_getProductInformation, NULL ),
+        MAP_FUNCTION( IAP_getStoredProductInformation, NULL ),
+        MAP_FUNCTION( IAP_purchaseProduct, NULL ),
+        MAP_FUNCTION( IAP_finishTransaction, NULL ),
+        MAP_FUNCTION( IAP_restoreTransactions, NULL ),
+        MAP_FUNCTION( IAP_getCurrentTransactions, NULL ),
+        MAP_FUNCTION( IAP_getStoredTransaction, NULL )
     };
     
 	*numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );

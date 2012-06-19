@@ -10,7 +10,7 @@
 #import <StoreKit/StoreKit.h>
 #import "FlashRuntimeExtensions.h"
 
-@interface StoreKitDelegate : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface IAP_StoreKitDelegate : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver>
 {
     
 }

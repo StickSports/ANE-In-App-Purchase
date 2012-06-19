@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Stick Sports Ltd. All rights reserved.
 //
 
-
 #import <Foundation/Foundation.h>
 #import "FlashRuntimeExtensions.h"
 
@@ -15,8 +14,6 @@
 }
 
 - (id)initWithContext:(FREContext)extensionContext;
-- (NSString*) storeReturnObject:(id)object;
-- (id) getReturnObject:(NSString*) key;
 - (FREObject) canMakePayments;
 - (FREObject) getProductInformationForIds:(FREObject)asId;
 - (FREObject) getStoredProductInformation:(FREObject)asKey;
