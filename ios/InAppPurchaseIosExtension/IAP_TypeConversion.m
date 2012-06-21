@@ -56,6 +56,10 @@
 
 - (FREResult) FREGetString:(NSString*)string asObject:(FREObject*)asString;
 {
+    if( string == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     const char* utf8String = string.UTF8String;
     unsigned long length = strlen( utf8String );
     return FRENewObjectFromUTF8( length + 1, (uint8_t*) utf8String, asString );
@@ -63,6 +67,10 @@
 
 - (FREResult) FREGetDate:(NSDate*)date asObject:(FREObject*)asDate;
 {
+    if( date == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     NSTimeInterval timestamp = date.timeIntervalSince1970 * 1000;
     FREResult result;
     FREObject time;
@@ -77,6 +85,10 @@
 
 - (FREResult) FREGetError:(NSError*)error asObject:(FREObject*)asError;
 {
+    if( error == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     
     FREObject code;
@@ -102,6 +114,10 @@
 
 - (FREResult) FREGetData:(NSData*)data asObject:(FREObject*)asData;
 {
+    if( data == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     result = FRENewObject( "flash.utils.ByteArray", 0, NULL, asData, NULL );
     if( result != FRE_OK ) return result;
@@ -120,6 +136,10 @@
 
 - (FREResult) FRESetObject:(FREObject)asObject property:(const uint8_t*)propertyName toString:(NSString*)value;
 {
+    if( value == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     FREObject asValue;
     result = [self FREGetString:value asObject:&asValue];
@@ -153,6 +173,10 @@
 
 - (FREResult) FRESetObject:(FREObject)asObject property:(const uint8_t*)propertyName toDate:(NSDate*)value;
 {
+    if( value == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     FREObject asValue;
     result = [self FREGetDate:value asObject:&asValue];
@@ -164,6 +188,10 @@
 
 - (FREResult) FRESetObject:(FREObject)asObject property:(const uint8_t*)propertyName toError:(NSError*)value;
 {
+    if( value == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     FREObject asValue;
     result = [self FREGetError:value asObject:&asValue];
@@ -175,6 +203,10 @@
 
 - (FREResult) FRESetObject:(FREObject)asObject property:(const uint8_t*)propertyName toData:(NSData*)value;
 {
+    if( value == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     FREObject asValue;
     result = [self FREGetData:value asObject:&asValue];
@@ -191,28 +223,43 @@
     result = FRENewObject( ASProduct, 0, NULL, asProduct, NULL);
     if( result != FRE_OK ) return result;
     
-    result = [self FRESetObject:*asProduct property:"id" toString:product.productIdentifier];
-    if( result != FRE_OK ) return result;
+    if( product.productIdentifier )
+    {
+        result = [self FRESetObject:*asProduct property:"id" toString:product.productIdentifier];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asProduct property:"title" toString:product.localizedTitle];
-    if( result != FRE_OK ) return result;
+    if( product.localizedTitle )
+    {
+        result = [self FRESetObject:*asProduct property:"title" toString:product.localizedTitle];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asProduct property:"desc" toString:product.localizedDescription];
-    if( result != FRE_OK ) return result;
+    if( product.localizedDescription )
+    {
+        result = [self FRESetObject:*asProduct property:"desc" toString:product.localizedDescription];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asProduct property:"price" toDouble:product.price.doubleValue];
-    if( result != FRE_OK ) return result;
+    if( product.price )
+    {
+        result = [self FRESetObject:*asProduct property:"price" toDouble:product.price.doubleValue];
+        if( result != FRE_OK ) return result;
     
-    NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
-    [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    [numberFormatter setLocale:product.priceLocale];
-    NSString *formattedPrice = [numberFormatter stringFromNumber:product.price];
+        NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
+        [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [numberFormatter setLocale:product.priceLocale];
+        NSString *formattedPrice = [numberFormatter stringFromNumber:product.price];
     
-    result = [self FRESetObject:*asProduct property:"formattedPrice" toString:formattedPrice];
-    if( result != FRE_OK ) return result;
+        result = [self FRESetObject:*asProduct property:"formattedPrice" toString:formattedPrice];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asProduct property:"priceLocale" toString:[product.priceLocale localeIdentifier]];
-    if( result != FRE_OK ) return result;
+    if( product.priceLocale )
+    {
+        result = [self FRESetObject:*asProduct property:"priceLocale" toString:[product.priceLocale localeIdentifier]];
+        if( result != FRE_OK ) return result;
+    }
     
     return FRE_OK;
 }
@@ -224,20 +271,35 @@
     result = FRENewObject( ASTransaction, 0, NULL, asTransaction, NULL);
     if( result != FRE_OK ) return result;
     
-    result = [self FRESetObject:*asTransaction property:"productId" toString:transaction.payment.productIdentifier];
-    if( result != FRE_OK ) return result;
+    if( transaction.payment && transaction.payment.productIdentifier )
+    {
+        result = [self FRESetObject:*asTransaction property:"productId" toString:transaction.payment.productIdentifier];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asTransaction property:"productQuantity" toInt:transaction.payment.quantity];
-    if( result != FRE_OK ) return result;
+    if( transaction.payment && transaction.payment.quantity )
+    {
+        result = [self FRESetObject:*asTransaction property:"productQuantity" toInt:transaction.payment.quantity];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asTransaction property:"id" toString:transaction.transactionIdentifier];
-    if( result != FRE_OK ) return result;
+    if( transaction.transactionIdentifier )
+    {
+        result = [self FRESetObject:*asTransaction property:"id" toString:transaction.transactionIdentifier];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asTransaction property:"date" toDate:transaction.transactionDate];
-    if( result != FRE_OK ) return result;
+    if( transaction.transactionDate )
+    {
+        result = [self FRESetObject:*asTransaction property:"date" toDate:transaction.transactionDate];
+        if( result != FRE_OK ) return result;
+    }
     
-    result = [self FRESetObject:*asTransaction property:"state" toInt:transaction.transactionState];
-    if( result != FRE_OK ) return result;
+    if( transaction.transactionState )
+    {
+        result = [self FRESetObject:*asTransaction property:"state" toInt:transaction.transactionState];
+        if( result != FRE_OK ) return result;
+    }
     
     if( transaction.transactionState == SKPaymentTransactionStateFailed )
     {

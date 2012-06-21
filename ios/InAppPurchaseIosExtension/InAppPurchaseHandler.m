@@ -85,7 +85,6 @@
 {
     NSString* key;
     if( [self.converter FREGetObject:asKey asString:&key] != FRE_OK ) return NULL;
-    
     SKProductsResponse* response = [self getReturnObject:key];
     if( response == nil || response.products == nil )
     {
