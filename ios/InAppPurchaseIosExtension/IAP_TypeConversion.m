@@ -218,6 +218,10 @@
 
 - (FREResult) FREGetSKProduct:(SKProduct*)product asObject:(FREObject*)asProduct;
 {
+    if( product == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     
     result = FRENewObject( ASProduct, 0, NULL, asProduct, NULL);
@@ -266,6 +270,10 @@
 
 - (FREResult) FREGetSKTransaction:(SKPaymentTransaction*)transaction asObject:(FREObject*)asTransaction;
 {
+    if( transaction == nil )
+    {
+        return FRE_INVALID_ARGUMENT;
+    }
     FREResult result;
     
     result = FRENewObject( ASTransaction, 0, NULL, asTransaction, NULL);
@@ -277,7 +285,7 @@
         if( result != FRE_OK ) return result;
     }
     
-    if( transaction.payment && transaction.payment.quantity )
+    if( transaction.payment )
     {
         result = [self FRESetObject:*asTransaction property:"productQuantity" toInt:transaction.payment.quantity];
         if( result != FRE_OK ) return result;
@@ -295,25 +303,22 @@
         if( result != FRE_OK ) return result;
     }
     
-    if( transaction.transactionState )
-    {
-        result = [self FRESetObject:*asTransaction property:"state" toInt:transaction.transactionState];
-        if( result != FRE_OK ) return result;
-    }
+    result = [self FRESetObject:*asTransaction property:"state" toInt:transaction.transactionState];
+    if( result != FRE_OK ) return result;
     
-    if( transaction.transactionState == SKPaymentTransactionStateFailed )
+    if( transaction.transactionState == SKPaymentTransactionStateFailed && transaction.error )
     {
         result = [self FRESetObject:*asTransaction property:"error" toError:transaction.error];
         if( result != FRE_OK ) return result;
     }
     
-    if( transaction.transactionState == SKPaymentTransactionStatePurchased )
+    if( transaction.transactionState == SKPaymentTransactionStatePurchased && transaction.transactionReceipt )
     {
         result = [self FRESetObject:*asTransaction property:"receipt" toData:transaction.transactionReceipt];
         if( result != FRE_OK ) return result;
     }
     
-    if( transaction.transactionState == SKPaymentTransactionStateRestored )
+    if( transaction.transactionState == SKPaymentTransactionStateRestored && transaction.originalTransaction )
     {
         FREObject original;
         result = [self FREGetSKTransaction:transaction.originalTransaction asObject:&original];
