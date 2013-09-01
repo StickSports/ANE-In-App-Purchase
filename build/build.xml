@@ -90,4 +90,20 @@
 		<move file="../temp/default/${name}.swc" todir="../bin"/>
 		<delete dir="../temp"/>
 	</target>
+	  <target name="package_nosig" description="Create the extension package">
+                <exec executable="${sdk.home}/bin/adt" failonerror="true" dir="../temp">
+                        <arg value="-package"/>
+                        <arg value="-target"/>
+                        <arg value="ane"/>
+                        <arg value="${name}.ane"/>
+                        <arg value="../build/extension.xml"/>
+                        <arg line="-swc swc/${name}.swc"/>
+                        <arg line="-platform iPhone-ARM -platformoptions ../build/platform.xml -C ios/ ."/>
+                        <arg line="-platform default -C default/ ."/>
+                </exec>
+
+                <move file="../temp/${name}.ane" todir="../bin"/>
+                <move file="../temp/default/${name}.swc" todir="../bin"/>
+                <delete dir="../temp"/>
+        </target>
 </project>
