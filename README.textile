@@ -1,5 +1,7 @@
 h1. Air Native Extension for In-App Purchase integration on iOS
 
+*Please note that we are no longer able to support this project and are not contributing to it.*
+
 This is an "Air native extension":http://www.adobe.com/devnet/air/native-extensions-for-air.html for In-App Purchase integration on the iOS platform.
 
 h3. Version
